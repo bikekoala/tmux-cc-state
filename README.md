@@ -27,7 +27,11 @@ run-shell '~/.tmux/plugins/tmux-cc-state/cc.tmux'
 ### Claude Code plugin
 
 ```bash
-claude plugin install ocherry341/tmux-cc-state
+# Add marketplace (once)
+/plugin marketplace add ocherry341/tmux-cc-state
+
+# Install
+claude plugin install tmux-cc-state@tmux-cc-state
 ```
 
 ## Format variables

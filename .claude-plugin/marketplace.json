@@ -1,0 +1,15 @@
+{
+  "name": "tmux-cc-state",
+  "owner": { "name": "ocherry341" },
+  "metadata": {
+    "description": "Claude Code tmux plugins"
+  },
+  "plugins": [
+    {
+      "name": "tmux-cc-state",
+      "source": ".",
+      "version": "1.0.0",
+      "description": "Track Claude Code activity state and daily token usage in tmux status bar"
+    }
+  ]
+}
