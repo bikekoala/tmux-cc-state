@@ -1,0 +1,12 @@
+{
+  "name": "cc-state",
+  "version": "1.0.0",
+  "description": "Track Claude Code activity state and daily token usage in tmux status bar",
+  "author": {
+    "name": "ocherry341"
+  },
+  "repository": "https://github.com/ocherry341/tmux-cc-state",
+  "license": "MIT",
+  "keywords": ["tmux", "status-bar", "state", "token-usage"],
+  "hooks": ["./hooks/state-hooks.json"]
+}
