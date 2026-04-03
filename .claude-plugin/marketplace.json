@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "tmux-cc-state",
-      "source": ".",
+      "source": { "source": "github", "repo": "ocherry341/tmux-cc-state" },
       "version": "1.0.0",
       "description": "Track Claude Code activity state and daily token usage in tmux status bar"
     }

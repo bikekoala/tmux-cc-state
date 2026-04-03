@@ -1,23 +1,13 @@
 #!/usr/bin/env bash
+# Create a new tmux window (and session if needed), then switch to it.
+# $1 = window name, $2 = session name (defaults to $1)
 
-WINDOW_NAME="${1}"
-SESSION_NAME="${2:-${WINDOW_NAME}}"
+win_name="${1}"
+sess_name="${2:-${win_name}}"
 
-function create_session_if_needed() {
-    if ! tmux has-session -t "${SESSION_NAME}" 2>/dev/null; then
-        tmux new-session -d -s "${SESSION_NAME}"
-    fi
-}
+if ! tmux has-session -t "${sess_name}" 2>/dev/null; then
+    tmux new-session -d -s "${sess_name}"
+fi
 
-function create_window() {
-    window_id=$(tmux new-window -t "${SESSION_NAME}" -d -n "${WINDOW_NAME}" -P -F "#{window_id}")
-    
-    tmux switch-client -t "${window_id}"
-}
-
-function main() {
-    create_session_if_needed
-    create_window
-}
-
-main
+wid=$(tmux new-window -t "${sess_name}" -d -n "${win_name}" -P -F "#{window_id}")
+tmux switch-client -t "${wid}"

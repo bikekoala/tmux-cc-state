@@ -1,20 +1,21 @@
 #!/usr/bin/env bash
+# Capture the active pane of a given window for fzf preview.
+# Input format from fzf: "session:index:wid:name [icon]"
 
-window_spec="${1}"
-IFS=':' read -r session_name window_index window_name <<< "$window_spec"
+spec="$1"
+IFS=':' read -r sess idx _wid _name <<< "$spec"
 
-if [ -z "${session_name}" ] || [ -z "${window_index}" ]; then
-  echo "Invalid window specification: '${window_spec}'"
+if [ -z "$sess" ] || [ -z "$idx" ]; then
+  echo "Invalid input: '$spec'"
   exit 1
 fi
 
-target="${session_name}:${window_index}"
-active_pane=$(tmux list-panes -t "${target}" -F '#{pane_id} #{pane_active}' | awk '$2 == "1" {print $1}')
+win="${sess}:${idx}"
+pane=$(tmux list-panes -t "$win" -F '#{pane_id} #{pane_active}' | awk '$2 == "1" {print $1}')
 
-if [ -z "${active_pane}" ]; then
-  echo "No active pane found for window ${target}"
+if [ -z "$pane" ]; then
+  echo "No active pane for $win"
   exit 1
 fi
 
-# Display the contents of the window's active pane
-tmux capture-pane -ep -t "${active_pane}"
+tmux capture-pane -ep -t "$pane"
