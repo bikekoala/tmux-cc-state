@@ -42,7 +42,20 @@ while IFS= read -r line; do
 done < <(tmux show-environment -g 2>/dev/null | grep "^${prefix}${safe_name}_" || true)
 
 if [ -z "$matched" ]; then
-  log "pane=${pane_id} to=${to} no matching SA var (prefix=${prefix}${safe_name}_)"
+  # Teammate-to-teammate: search globally for the SA var on the leader pane
+  while IFS= read -r line; do
+    key="${line%%=*}"
+    case "$key" in
+      *_SA_${safe_name}_*)
+        matched="$key"
+        break
+        ;;
+    esac
+  done < <(tmux show-environment -g 2>/dev/null | grep "_SA_${safe_name}_" || true)
+fi
+
+if [ -z "$matched" ]; then
+  log "pane=${pane_id} to=${to} no matching SA var"
   exit 0
 fi
 
