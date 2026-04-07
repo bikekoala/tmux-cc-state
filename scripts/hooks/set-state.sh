@@ -22,6 +22,13 @@ esac
 
 pane_id="${TMUX_PANE:-$(tmux display-message -p '#{pane_id}')}"
 env_key="CC_PANE_${pane_id#%}_STATE"
+
+current=$(tmux show-environment -g "$env_key" 2>/dev/null | sed "s/^${env_key}=//" || true)
+if [ "$current" = "$state" ]; then
+  log "pane=${pane_id} state=$state (unchanged, skip)"
+  exit 0
+fi
+
 tmux set-environment -g "$env_key" "$state"
 
 log "pane=${pane_id} state=$state"
